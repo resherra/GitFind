@@ -1,4 +1,6 @@
-import { SignedIn, SignedOut, UserButton, useClerk, useAuth, useUser } from "@clerk/clerk-react"
+import { SignedIn, SignedOut, UserButton, useAuth, useClerk, useUser } from "@clerk/clerk-react"
+import { useEffect } from "react"
+import axios from "axios"
 
 function SignInButton() {
   const clerk = useClerk()
