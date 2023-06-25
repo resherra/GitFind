@@ -6,6 +6,7 @@ import Issues from "./Issues"
 import { useQuery } from "@tanstack/react-query"
 import { useParams } from "react-router-dom"
 import axios from "axios"
+import RepoCard from "../components/RepoCard"
 
 export default function SingleRepo() {
   const { username, reponame } = useParams()
@@ -18,25 +19,21 @@ export default function SingleRepo() {
 
   return (
     <>
-      <h2>single repo</h2>
+      <header className="pb-20">
+        <RepoCard reponame={reponame} />
+      </header>
 
-      {repoQuery.isLoading ? (
-        "loading..."
-      ) : (
-        <>
-          <h1> {repoQuery.data.name} </h1>
-          <h4> {repoQuery.data.language} </h4>
-          <a target="blank" href={repoQuery.data.svn_url}>
-            visit the repo in github
-          </a>
-        </>
-      )}
-
-      <nav>
-        <Link to="commits">commits</Link>
-        <Link to="PR">PR</Link>
-        <Link to="issues">issues</Link>
-      </nav>
+      <div className="flex gap-5 pb-8">
+        <Link to="commits">
+          <div className="bg-secColor px-4 py-2 rounded-full text-sm ">Commits</div>
+        </Link>
+        <Link to="PR">
+          <div className="bg-secColor px-4 py-2 rounded-full text-sm ">PR</div>
+        </Link>
+        <Link to="issues">
+          <div className="bg-secColor px-4 py-2 rounded-full text-sm ">Issues</div>
+        </Link>
+      </div>
 
       <Routes>
         <Route path="/commits" element={<Commits username={username} reponame={reponame} />} />

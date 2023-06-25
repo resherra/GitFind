@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
+import DetailsCard from "../components/DetailsCard"
 
 export default function Commits({ username, reponame }) {
   const commitsQuery = useQuery(["repo", reponame, "commits"], async () => {
@@ -8,21 +9,16 @@ export default function Commits({ username, reponame }) {
     return res.data
   })
 
-  commitsQuery.isSuccess && console.log(commitsQuery.data)
-
   return (
-    <div>
+    <div className="w-3/4">
       {commitsQuery.isLoading ? (
         "loading..."
       ) : (
-        <ul>
+        <ul className="flex flex-col gap-8">
           {commitsQuery.data?.map((commit) => (
-            <div key={commit.sha}>
-              <h2>
-                {commit.commit.message} by {commit.author?.login}{" "}
-              </h2>
-              <img className="w-6" src={commit.author?.avatar_url} alt="" />
-            </div>
+            <li key={commit.sha}>
+              <DetailsCard author={commit.author?.login} avatar={commit.author?.avatar_url} body={commit.commit?.message} />
+            </li>
           ))}
         </ul>
       )}

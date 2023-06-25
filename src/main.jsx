@@ -16,7 +16,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <App />
+        <div className={`max-w-screen-sm m-auto mt-10`}>
+          <App />
+        </div>
       </BrowserRouter>
       <ReactQueryDevtools />
     </QueryClientProvider>

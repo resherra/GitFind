@@ -1,22 +1,19 @@
 import { Route, Routes } from "react-router-dom"
 import Home from "./pages/Home"
 import SingleRepo from "./pages/SingleRepo"
-import Commits from "./pages/Commits"
-import Issues from "./pages/Issues"
-import PR from "./pages/PR"
 
 function App() {
+  // const isRootPath = useMatch({ path: "/", end: true })
+
   return (
-    <div className="App">
+    <>
+      {/* {!isRootPath && <Link to="/">Home</Link>} */}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/:username/:reponame/*" element={<SingleRepo />}>
-          {/* <Route path="commits" element={<Commits />} />
-          <Route path="PR" element={<PR />} />
-          <Route path="issues" element={<Issues />} /> */}
-        </Route>
+        <Route path="/:username/:reponame/*" element={<SingleRepo />} />
       </Routes>
-    </div>
+      <div className="text-center pt-20 pb-4">Built with React, React Query, Tailwindcss</div>
+    </>
   )
 }
 

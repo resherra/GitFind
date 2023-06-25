@@ -1,11 +1,12 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import RepoCard from "../components/RepoCard"
+import User from "../components/User"
 
 export default function Home() {
   const [user, setUser] = useState("")
-  const queryClient = useQueryClient()
 
   const reposQuery = useQuery(
     ["user", user, "repos"],
@@ -22,39 +23,43 @@ export default function Home() {
 
   return (
     <>
-      <h1>welcode to GiiitFing</h1>
-      <h3>search for a user, navigate repos...</h3>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault()
-          reposQuery.refetch()
-        }}
-      >
-        <label htmlFor="search">search for a user:</label>
-        <input type="text" onChange={(e) => setUser(e.target.value)} />
-        <button type="submit">search</button>
-      </form>
+      <div className="text-center pb-20">
+        <header className="pb-20">
+          <h1 className="text-3xl font-semibold pb-5">Git Find</h1>
+          <h3 className="text-xl font-semibold">Look up a GitHub user and explore their profile...</h3>
+        </header>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            reposQuery.refetch()
+          }}
+        >
+          <input className="bg-transparent border-2 border-secColor rounded-full px-2 py-2 mr-4" type="text" onChange={(e) => setUser(e.target.value)} />
+          <button className=" bg-secColor text-textColor rounded-full px-6 py-2" type="submit">
+            Search
+          </button>
+        </form>
+      </div>
 
       {reposQuery.fetchStatus === "idle" && reposQuery.isLoading ? null : reposQuery.isLoading ? (
         "loading..."
       ) : (
-        <>
-          <ul>
+        <div className="flex gap-36">
+          <User username={reposQuery.data[1].owner.login} userAvatar={reposQuery.data[1].owner.avatar_url} />
+          <ul className="w-full">
             {
               <li>
-                <div>
+                <div className="flex flex-col gap-8">
                   {reposQuery.data.map((repo) => (
                     <Link key={repo.node_id} to={`/${repo.owner.login}/${repo.name}`}>
-                      <div className={`px-5 py-5 border border-blue-950 max-w-min rounded-2xl my-5`}>
-                        <h3>{repo.name}</h3>
-                      </div>
+                      <RepoCard reponame={repo.name} />
                     </Link>
                   ))}{" "}
                 </div>
               </li>
             }
           </ul>
-        </>
+        </div>
       )}
     </>
   )
