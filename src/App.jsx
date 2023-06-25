@@ -10,10 +10,10 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/:reponame" element={<SingleRepo />}>
-          <Route path="commits" element={<Commits />} />
+        <Route path="/:username/:reponame/*" element={<SingleRepo />}>
+          {/* <Route path="commits" element={<Commits />} />
           <Route path="PR" element={<PR />} />
-          <Route path="issues" element={<Issues />} />
+          <Route path="issues" element={<Issues />} /> */}
         </Route>
       </Routes>
     </div>

@@ -1,14 +1,16 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
 export default function Home() {
   const [user, setUser] = useState("")
+  const queryClient = useQueryClient()
 
-  const userQuery = useQuery(
-    ["user", "repos"],
+  const reposQuery = useQuery(
+    ["user", user, "repos"],
     async () => {
-      const res = await axios.get(`/users/${user}`)
+      const res = await axios.get(`/users/${user}/repos`)
 
       return res.data
     },
@@ -25,7 +27,7 @@ export default function Home() {
       <form
         onSubmit={(e) => {
           e.preventDefault()
-          userQuery.refetch()
+          reposQuery.refetch()
         }}
       >
         <label htmlFor="search">search for a user:</label>
@@ -33,12 +35,25 @@ export default function Home() {
         <button type="submit">search</button>
       </form>
 
-      {userQuery.fetchStatus === "idle" && userQuery.isLoading ? null : userQuery.isLoading ? (
+      {reposQuery.fetchStatus === "idle" && reposQuery.isLoading ? null : reposQuery.isLoading ? (
         "loading..."
       ) : (
         <>
-          <div>{userQuery.data.login}</div>
-          <div>{userQuery.data.bio}</div>
+          <ul>
+            {
+              <li>
+                <div>
+                  {reposQuery.data.map((repo) => (
+                    <Link key={repo.node_id} to={`/${repo.owner.login}/${repo.name}`}>
+                      <div className={`px-5 py-5 border border-blue-950 max-w-min rounded-2xl my-5`}>
+                        <h3>{repo.name}</h3>
+                      </div>
+                    </Link>
+                  ))}{" "}
+                </div>
+              </li>
+            }
+          </ul>
         </>
       )}
     </>
