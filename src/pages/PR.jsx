@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import DetailsCard from "../components/DetailsCard"
+import Container from "../components/Container"
 
 export default function PR({ username, reponame }) {
   const pullsQuery = useQuery(["repo", reponame, "pulls"], async () => {
@@ -10,7 +11,7 @@ export default function PR({ username, reponame }) {
   })
 
   return (
-    <div className="w-3/4">
+    <Container>
       {pullsQuery.isLoading ? (
         "loading..."
       ) : (
@@ -22,6 +23,6 @@ export default function PR({ username, reponame }) {
           ))}
         </ul>
       )}
-    </div>
+    </Container>
   )
 }

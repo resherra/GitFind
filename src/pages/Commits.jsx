@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import DetailsCard from "../components/DetailsCard"
+import Container from "../components/Container"
 
 export default function Commits({ username, reponame }) {
   const commitsQuery = useQuery(["repo", reponame, "commits"], async () => {
@@ -10,7 +11,7 @@ export default function Commits({ username, reponame }) {
   })
 
   return (
-    <div className="w-3/4">
+    <Container>
       {commitsQuery.isLoading ? (
         "loading..."
       ) : (
@@ -22,6 +23,6 @@ export default function Commits({ username, reponame }) {
           ))}
         </ul>
       )}
-    </div>
+    </Container>
   )
 }

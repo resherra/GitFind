@@ -7,15 +7,11 @@ import { useQuery } from "@tanstack/react-query"
 import { useParams } from "react-router-dom"
 import axios from "axios"
 import RepoCard from "../components/RepoCard"
+import { useMatch } from "react-router-dom"
 
 export default function SingleRepo() {
   const { username, reponame } = useParams()
-
-  const repoQuery = useQuery(["repo", reponame], async () => {
-    const res = await axios.get(`/repos/${username}/${reponame}`)
-
-    return res.data
-  })
+  const isRootPath = useMatch({ path: "/:username/:reponame", end: true })
 
   return (
     <>
@@ -34,6 +30,8 @@ export default function SingleRepo() {
           <div className="bg-secColor px-4 py-2 rounded-full text-sm ">Issues</div>
         </Link>
       </div>
+
+      {isRootPath && <Commits username={username} reponame={reponame} />}
 
       <Routes>
         <Route path="/commits" element={<Commits username={username} reponame={reponame} />} />

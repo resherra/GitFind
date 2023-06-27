@@ -4,6 +4,8 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import RepoCard from "../components/RepoCard"
 import User from "../components/User"
+import Pagination from "../components/Pagination"
+import LoadButton from "../components/LoadButton"
 
 export default function Home() {
   const [user, setUser] = useState("")
@@ -23,18 +25,20 @@ export default function Home() {
 
   return (
     <>
-      <div className="text-center pb-20">
+      <div className="text-center pb-20 ">
         <header className="pb-20">
           <h1 className="text-3xl font-semibold pb-5">Git Find</h1>
           <h3 className="text-xl font-semibold">Look up a GitHub user and explore their profile...</h3>
         </header>
+        {/* search */}
         <form
           onSubmit={(e) => {
             e.preventDefault()
             reposQuery.refetch()
           }}
+          className="flex flex-row justify-between"
         >
-          <input className="bg-transparent border-2 border-secColor rounded-full px-2 py-2 mr-4" type="text" onChange={(e) => setUser(e.target.value)} />
+          <input className="bg-transparent border-2 border-secColor rounded-full px-4 py-2 mr-4 w-full " type="text" onChange={(e) => setUser(e.target.value)} />
           <button className=" bg-secColor text-textColor rounded-full px-6 py-2" type="submit">
             Search
           </button>
