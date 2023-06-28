@@ -4,22 +4,22 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import RepoCard from "../components/RepoCard"
 import User from "../components/User"
-import Pagination from "../components/Pagination"
-import LoadButton from "../components/LoadButton"
+import { useEffect } from "react"
 
 export default function Home() {
+  //search value
   const [user, setUser] = useState("")
+  const [page, setPage] = useState(1)
+  const [sent, setSent] = useState(false)
 
   const reposQuery = useQuery(
-    ["user", user, "repos"],
+    ["user", user, "repos", { page }],
     async () => {
-      const res = await axios.get(`/users/${user}/repos`)
-
+      const res = await axios.get(`/users/${user}/repos?per_page=6&page=${page}`)
       return res.data
     },
     {
-      enabled: false,
-      staleTime: Infinity,
+      enabled: sent,
     }
   )
 
@@ -30,11 +30,12 @@ export default function Home() {
           <h1 className="text-3xl font-semibold pb-5">Git Find</h1>
           <h3 className="text-xl font-semibold">Look up a GitHub user and explore their profile...</h3>
         </header>
-        {/* search */}
         <form
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault()
-            reposQuery.refetch()
+            setSent(true)
+            await reposQuery.refetch()
+            setSent(false)
           }}
           className="flex flex-row justify-between"
         >
@@ -65,6 +66,16 @@ export default function Home() {
           </ul>
         </div>
       )}
+
+      <div className="flex gap-8 items-center w-full m-auto">
+        <button disabled={page === 1} onClick={() => setPage((prev) => prev - 1)} className=" bg-secColor disabled:bg-textColor/5 w-28 px-3 py-2 rounded-xl">
+          Previous
+        </button>
+        <div className="bg-secColor w-fit px-3 py-2 rounded-xl">{page}</div>
+        <button onClick={() => setPage((prev) => prev + 1)} className="bg-secColor w-28 px-3 py-2 rounded-xl">
+          Next
+        </button>
+      </div>
     </>
   )
 }

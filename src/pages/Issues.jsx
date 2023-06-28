@@ -1,14 +1,9 @@
-import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
 import DetailsCard from "../components/DetailsCard"
 import Container from "../components/Container"
+import useDetails from "../helpers/useDetails"
 
 export default function Issues({ username, reponame }) {
-  const issuesQuery = useQuery(["repo", reponame, "issues"], async () => {
-    const res = await axios.get(`/repos/${username}/${reponame}/issues`)
-
-    return res.data
-  })
+  const issuesQuery = useDetails(username, reponame, "issues")
 
   return (
     <Container>

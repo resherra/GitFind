@@ -1,14 +1,9 @@
-import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
 import DetailsCard from "../components/DetailsCard"
 import Container from "../components/Container"
+import useDetails from "../helpers/useDetails"
 
 export default function Commits({ username, reponame }) {
-  const commitsQuery = useQuery(["repo", reponame, "commits"], async () => {
-    const res = await axios.get(`/repos/${username}/${reponame}/commits`)
-
-    return res.data
-  })
+  const commitsQuery = useDetails(username, reponame, "commits")
 
   return (
     <Container>
