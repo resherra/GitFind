@@ -4,7 +4,6 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import RepoCard from "../components/RepoCard"
 import User from "../components/User"
-import { useEffect } from "react"
 
 export default function Home() {
   //search value
