@@ -26,9 +26,14 @@ export default function PR({ username, reponame }) {
               )
             })}
           </ul>
-          <div className="self-center pt-28">
-            <LoadButton query={pullsQuery} />
-          </div>
+
+          {pullsQuery.data?.pages[0].length !== 0 ? (
+            <div className="self-center pt-28">
+              <LoadButton query={pullsQuery} />
+            </div>
+          ) : (
+            <div>This repo has no PR!</div>
+          )}
         </>
       )}
     </Container>

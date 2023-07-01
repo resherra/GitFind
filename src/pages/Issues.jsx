@@ -26,9 +26,13 @@ export default function Issues({ username, reponame }) {
               )
             })}
           </ul>
-          <div className="self-center pt-28">
-            <LoadButton query={issuesQuery} />
-          </div>
+          {issuesQuery.data?.pages[0].length !== 0 ? (
+            <div className="self-center pt-28">
+              <LoadButton query={issuesQuery} />
+            </div>
+          ) : (
+            <div>This repo has no issues!</div>
+          )}
         </>
       )}
     </Container>

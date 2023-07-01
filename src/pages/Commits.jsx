@@ -26,9 +26,13 @@ export default function Commits({ username, reponame }) {
               )
             })}
           </ul>
-          <div className="self-center pt-28">
-            <LoadButton query={commitsQuery} />
-          </div>
+          {commitsQuery.data?.pages[0].length !== 0 ? (
+            <div className="self-center pt-28">
+              <LoadButton query={commitsQuery} />
+            </div>
+          ) : (
+            <div>This repo has no commits!</div>
+          )}
         </>
       )}
     </Container>

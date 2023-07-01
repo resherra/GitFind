@@ -1,27 +1,46 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import RepoCard from "../components/RepoCard"
 import User from "../components/User"
+import { useEffect } from "react"
+import Pagination from "../components/Pagination"
 
 export default function Home() {
   //search value
   const [user, setUser] = useState("")
   const [page, setPage] = useState(1)
   const [sent, setSent] = useState(false)
+  const [empty, setEmpty] = useState(false)
+  const queryClient = useQueryClient()
 
-  //query
-  const reposQuery = useQuery(
-    ["user", user, "repos", { page }],
-    async () => {
+  //fetch function
+  const fetchRepos = async (user, page) => {
+    if (user !== "") {
       const res = await axios.get(`/users/${user}/repos?per_page=6&page=${page}`)
       return res.data
-    },
-    {
-      enabled: sent || page !== 1,
     }
-  )
+
+    return 0
+  }
+
+  //query
+  const reposQuery = useQuery(["user", user, "repos", { page }], () => fetchRepos(user, page), {
+    enabled: sent || page !== 1,
+  })
+
+  useEffect(() => {
+    async function waiting() {
+      await queryClient.prefetchQuery(["user", user, "repos", { page: page + 1 }], () => fetchRepos(user, page + 1))
+      const nextPage = await queryClient.getQueryData(["user", user, "repos", { page: page + 1 }], { exact: true })
+      if (nextPage.length === 0) {
+        setEmpty(true)
+      }
+    }
+
+    waiting()
+  }, [page, queryClient])
 
   //body
   return (
@@ -71,15 +90,7 @@ export default function Home() {
         )}
 
         {/* pagination */}
-        <div className="flex gap-8 items-center self-center pt-28">
-          <button disabled={page === 1} onClick={() => setPage((prev) => prev - 1)} className=" bg-secColor disabled:bg-textColor/5 w-28 px-3 py-2 rounded-xl">
-            Previous
-          </button>
-          <div className="bg-secColor w-fit px-3 py-2 rounded-xl">{page}</div>
-          <button onClick={() => setPage((prev) => prev + 1)} className="bg-secColor w-28 px-3 py-2 rounded-xl">
-            Next
-          </button>
-        </div>
+        {reposQuery.data ? <Pagination page={page} setPage={setPage} empty={empty} setEmpty={setEmpty} /> : null}
       </div>
     </>
   )
