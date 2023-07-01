@@ -1,6 +1,8 @@
 import DetailsCard from "../components/DetailsCard"
 import Container from "../components/Container"
 import useDetails from "../helpers/useDetails"
+import React from "react"
+import LoadButton from "../components/LoadButton"
 
 export default function Issues({ username, reponame }) {
   const issuesQuery = useDetails(username, reponame, "issues")
@@ -10,15 +12,23 @@ export default function Issues({ username, reponame }) {
       {issuesQuery.isLoading ? (
         "Loading..."
       ) : (
-        <div>
+        <>
           <ul className="flex flex-col gap-8">
-            {issuesQuery.data?.map((issue) => (
-              <li key={issue.id}>
-                <DetailsCard author={issue.user.login} avatar={issue.user.avatar_url} body={issue.body} />
-              </li>
-            ))}
+            {issuesQuery.data?.pages.map((page, index) => {
+              return (
+                <React.Fragment key={index}>
+                  {page.map((issue) => (
+                    <li key={issue.id}>
+                      <DetailsCard author={issue.user.login} avatar={issue.user.avatar_url} body={issue.body} />
+                    </li>
+                  ))}
+                </React.Fragment>
+              )
+            })}
           </ul>
-        </div>
+
+          <LoadButton query={issuesQuery} />
+        </>
       )}
     </Container>
   )

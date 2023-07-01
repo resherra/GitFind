@@ -2,6 +2,7 @@ import DetailsCard from "../components/DetailsCard"
 import Container from "../components/Container"
 import useDetails from "../helpers/useDetails"
 import React from "react"
+import LoadButton from "../components/LoadButton"
 
 export default function Commits({ username, reponame }) {
   const commitsQuery = useDetails(username, reponame, "commits")
@@ -12,7 +13,7 @@ export default function Commits({ username, reponame }) {
         "loading..."
       ) : (
         <>
-          <ul className="flex flex-col gap-8">
+          <ul className="flex flex-col gap-8 ">
             {commitsQuery.data?.pages.map((page, index) => {
               return (
                 <React.Fragment key={index}>
@@ -25,9 +26,7 @@ export default function Commits({ username, reponame }) {
               )
             })}
           </ul>
-          <button onClick={() => commitsQuery.fetchNextPage()} disabled={commitsQuery.isFetchingNextPage && !commitsQuery.hasNextPage} className="bg-secColor w-28 px-3 py-2 rounded-xl">
-            {commitsQuery.isFetchingNextPage ? "Loading..." : "Load more"}
-          </button>
+          <LoadButton query={commitsQuery} />
         </>
       )}
     </Container>

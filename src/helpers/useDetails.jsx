@@ -7,8 +7,6 @@ export default function useDetails(username, reponame, path) {
     async ({ pageParam = 1 }) => {
       const res = await axios.get(`/repos/${username}/${reponame}/${path}?per_page=6&page=${pageParam}`)
 
-      console.log(pageParam)
-
       return res.data
     },
     {
