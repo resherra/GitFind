@@ -26,7 +26,9 @@ export default function PR({ username, reponame }) {
               )
             })}
           </ul>
-          <LoadButton query={pullsQuery} />
+          <div className="self-center pt-28">
+            <LoadButton query={pullsQuery} />
+          </div>
         </>
       )}
     </Container>

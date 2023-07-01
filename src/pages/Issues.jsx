@@ -26,8 +26,9 @@ export default function Issues({ username, reponame }) {
               )
             })}
           </ul>
-
-          <LoadButton query={issuesQuery} />
+          <div className="self-center pt-28">
+            <LoadButton query={issuesQuery} />
+          </div>
         </>
       )}
     </Container>

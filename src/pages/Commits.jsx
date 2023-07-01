@@ -26,7 +26,9 @@ export default function Commits({ username, reponame }) {
               )
             })}
           </ul>
-          <LoadButton query={commitsQuery} />
+          <div className="self-center pt-28">
+            <LoadButton query={commitsQuery} />
+          </div>
         </>
       )}
     </Container>
