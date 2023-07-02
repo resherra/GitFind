@@ -19,7 +19,7 @@ export default function Issues({ username, reponame }) {
                 <React.Fragment key={index}>
                   {page.map((issue) => (
                     <li key={issue.id}>
-                      <DetailsCard author={issue.user.login} avatar={issue.user.avatar_url} body={issue.body} />
+                      <DetailsCard author={issue.user.login} avatar={issue.user.avatar_url} body={issue.body} detailUrl={issue.html_url} />
                     </li>
                   ))}
                 </React.Fragment>

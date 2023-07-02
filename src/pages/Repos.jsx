@@ -40,21 +40,23 @@ export default function Repos({ page, setPage }) {
       {reposQuery.fetchStatus === "idle" && reposQuery.isLoading ? null : reposQuery.isLoading ? (
         "loading..."
       ) : (
-        <div className="flex gap-36">
+        <div className="flex gap-8 justify-between">
           <User username={reposQuery.data[1]?.owner.login} userAvatar={reposQuery.data[1]?.owner.avatar_url} />
-          <ul className="w-full">
-            {
-              <li>
-                <div className="flex flex-col gap-8">
-                  {reposQuery.data?.map((repo) => (
-                    <Link key={repo.node_id} to={`/${repo.owner.login}/${repo.name}`}>
-                      <RepoCard reponame={repo.name} />
-                    </Link>
-                  ))}{" "}
-                </div>
-              </li>
-            }
-          </ul>
+          <div className="w-full">
+            <ul>
+              {
+                <li>
+                  <div className="flex flex-col gap-8">
+                    {reposQuery.data?.map((repo) => (
+                      <Link key={repo.node_id} to={`/${repo.owner.login}/${repo.name}`}>
+                        <RepoCard reponame={repo.name} language={repo.language} />
+                      </Link>
+                    ))}{" "}
+                  </div>
+                </li>
+              }
+            </ul>
+          </div>
         </div>
       )}
       {reposQuery.data ? <Pagination page={page} setPage={setPage} empty={empty} setEmpty={setEmpty} /> : null}

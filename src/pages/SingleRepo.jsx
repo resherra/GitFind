@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom"
-import { Link, Outlet } from "react-router-dom"
+import { Link } from "react-router-dom"
 import Commits from "./Commits"
 import PR from "./PR"
 import Issues from "./Issues"
@@ -13,10 +13,23 @@ export default function SingleRepo() {
   const { username, reponame } = useParams()
   const isRootPath = useMatch({ path: "/:username/:reponame", end: true })
 
+  const singleRepoQuery = useQuery(["repo", reponame], async () => {
+    const res = await axios.get(`/repos/${username}/${reponame}`)
+    return res.data
+  })
+
+  const coQuery = useQuery(["repo", reponame, "contributors"], async () => {
+    const res = await axios.get(`/repos/${username}/${reponame}/contributors`)
+    return res.data
+  })
+
+  const repo = singleRepoQuery.data
+  const contributors = coQuery.data
+
   return (
-    <>
+    <div className="min-h-screen">
       <header className="pb-20">
-        <RepoCard reponame={reponame} />
+        <RepoCard reponame={repo?.name} repoUrl={repo?.html_url} desc={repo?.description} isSingle={true} language={repo?.language} contributors={contributors} />
       </header>
 
       <div className="flex gap-5 pb-8">
@@ -38,6 +51,6 @@ export default function SingleRepo() {
         <Route path="/PR" element={<PR username={username} reponame={reponame} />} />
         <Route path="/issues" element={<Issues username={username} reponame={reponame} />} />
       </Routes>
-    </>
+    </div>
   )
 }

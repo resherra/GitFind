@@ -19,7 +19,7 @@ export default function PR({ username, reponame }) {
                 <React.Fragment key={index}>
                   {page.map((pull) => (
                     <li key={pull.id}>
-                      <DetailsCard author={pull.user.login} avatar={pull.user.avatar_url} body={pull.body} />
+                      <DetailsCard author={pull.user.login} avatar={pull.user.avatar_url} body={pull.body} detailUrl={pull.html_url} />
                     </li>
                   ))}
                 </React.Fragment>

@@ -10,7 +10,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex flex-col">
+      <div className="flex flex-col min-h-screen">
         <div className="text-center pb-20">
           <header className="pb-20">
             <h1 className="text-3xl font-semibold pb-5">Git Find</h1>

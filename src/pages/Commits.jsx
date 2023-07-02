@@ -19,7 +19,7 @@ export default function Commits({ username, reponame }) {
                 <React.Fragment key={index}>
                   {page.map((commit) => (
                     <li key={commit.sha}>
-                      <DetailsCard author={commit.author?.login} avatar={commit.author?.avatar_url} body={commit.commit?.message} />
+                      <DetailsCard author={commit.author?.login} avatar={commit.author?.avatar_url} body={commit.commit?.message} detailUrl={commit.html_url} />
                     </li>
                   ))}
                 </React.Fragment>
