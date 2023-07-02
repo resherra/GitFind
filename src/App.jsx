@@ -15,7 +15,7 @@ function App() {
         </Link>
       )}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/*" element={<Home />} />
         <Route path="/:username/:reponame/*" element={<SingleRepo />} />
       </Routes>
       <div className="text-center pt-20 pb-4">Built with React, React Query, Tailwindcss</div>

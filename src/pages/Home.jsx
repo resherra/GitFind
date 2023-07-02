@@ -6,9 +6,12 @@ import RepoCard from "../components/RepoCard"
 import User from "../components/User"
 import { useEffect } from "react"
 import Pagination from "../components/Pagination"
-
+import { Routes, Route } from "react-router-dom"
+import Repos from "./Repos"
+import { useNavigate } from "react-router-dom"
 export default function Home() {
   //search value
+  const navigate = useNavigate()
   const [user, setUser] = useState("")
   const [page, setPage] = useState(1)
   const [sent, setSent] = useState(false)
@@ -28,10 +31,11 @@ export default function Home() {
   //query
   const reposQuery = useQuery(["user", user, "repos", { page }], () => fetchRepos(user, page), {
     enabled: sent || page !== 1,
+    keepPreviousData: true,
   })
 
   useEffect(() => {
-    async function waiting() {
+    async function prefetchNext() {
       await queryClient.prefetchQuery(["user", user, "repos", { page: page + 1 }], () => fetchRepos(user, page + 1))
       const nextPage = await queryClient.getQueryData(["user", user, "repos", { page: page + 1 }], { exact: true })
       if (nextPage.length === 0) {
@@ -39,7 +43,7 @@ export default function Home() {
       }
     }
 
-    waiting()
+    prefetchNext()
   }, [page, queryClient])
 
   //body
@@ -57,6 +61,7 @@ export default function Home() {
               setSent(true)
               await reposQuery.refetch()
               setSent(false)
+              navigate(`/${user}`)
             }}
             className="flex flex-row justify-between"
           >
@@ -67,8 +72,12 @@ export default function Home() {
           </form>
         </div>
 
+        <Routes>
+          <Route path="/:username" element={<Repos user={user} />} />
+        </Routes>
+
         {/* repos */}
-        {reposQuery.fetchStatus === "idle" && reposQuery.isLoading ? null : reposQuery.isLoading ? (
+        {/* {reposQuery.fetchStatus === "idle" && reposQuery.isLoading ? null : reposQuery.isLoading ? (
           "loading..."
         ) : (
           <div className="flex gap-36">
@@ -87,7 +96,7 @@ export default function Home() {
               }
             </ul>
           </div>
-        )}
+        )} */}
 
         {/* pagination */}
         {reposQuery.data ? <Pagination page={page} setPage={setPage} empty={empty} setEmpty={setEmpty} /> : null}
