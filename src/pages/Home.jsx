@@ -3,9 +3,9 @@ import { Routes, Route } from "react-router-dom"
 import Repos from "./Repos"
 import { useNavigate } from "react-router-dom"
 
-export default function Home() {
+export default function Home({ path }) {
   const navigate = useNavigate()
-  const [user, setUser] = useState("")
+  const [user, setUser] = useState(path)
   const [page, setPage] = useState(1)
 
   return (
@@ -24,7 +24,7 @@ export default function Home() {
             }}
             className="flex flex-row justify-between"
           >
-            <input className="bg-transparent border-2 border-secColor rounded-full px-4 py-2 mr-4 w-full " type="text" onChange={(e) => setUser(e.target.value)} />
+            <input className="bg-transparent border-2 border-secColor rounded-full px-4 py-2 mr-4 w-full" value={user} type="text" onChange={(e) => setUser(e.target.value)} />
             <button className=" bg-secColor text-textColor rounded-full px-6 py-2" type="submit">
               Search
             </button>

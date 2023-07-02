@@ -8,8 +8,9 @@ import { useParams } from "react-router-dom"
 import axios from "axios"
 import RepoCard from "../components/RepoCard"
 import { useMatch } from "react-router-dom"
+import { useEffect } from "react"
 
-export default function SingleRepo() {
+export default function SingleRepo({ setPath }) {
   const { username, reponame } = useParams()
   const isRootPath = useMatch({ path: "/:username/:reponame", end: true })
 
@@ -25,6 +26,10 @@ export default function SingleRepo() {
 
   const repo = singleRepoQuery.data
   const contributors = coQuery.data
+
+  useEffect(() => {
+    setPath(username)
+  }, [username])
 
   return (
     <div className="min-h-screen">
