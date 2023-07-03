@@ -17,6 +17,7 @@ export default function useDetails(username, reponame, path) {
 
         return pages.length + 1
       },
+      retry: false,
     }
   )
 

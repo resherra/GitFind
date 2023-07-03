@@ -35,6 +35,10 @@ export default function Repos({ page, setPage }) {
     prefetchNext()
   }, [page, queryClient])
 
+  useEffect(() => {
+    setEmpty(false)
+  }, [username])
+
   return (
     <>
       {reposQuery.fetchStatus === "idle" && reposQuery.isLoading ? null : reposQuery.isLoading ? (
