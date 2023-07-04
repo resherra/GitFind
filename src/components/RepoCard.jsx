@@ -34,11 +34,7 @@ export default function RepoCard({ reponame, repoUrl, desc, language, isSingle =
           <p className="text-xs text-brandBlue">{language}</p>
           {isSingle ? (
             <div className="flex gap-2 items-center">
-              <div className="flex gap-2">
-                {cont?.map((acc) => (
-                  <UserAvatar key={acc.id} userAvatar={acc.avatar_url} username={acc.login} />
-                ))}
-              </div>
+              <div className="flex gap-2">{cont !== "" && cont?.map((acc) => <UserAvatar key={acc.id} userAvatar={acc.avatar_url} username={acc.login} />)}</div>
               {isLonger ? (
                 <div className="bg-white/10 w-7 h-7 rounded-full flex justify-center items-center">
                   <FiMoreHorizontal />

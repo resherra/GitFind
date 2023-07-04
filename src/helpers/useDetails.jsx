@@ -14,7 +14,6 @@ export default function useDetails(username, reponame, path) {
         if (lastPage.length === 0) {
           return
         }
-
         return pages.length + 1
       },
       retry: false,

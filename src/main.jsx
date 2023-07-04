@@ -7,8 +7,11 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { BrowserRouter } from "react-router-dom"
 import axios from "axios"
 
+const key = import.meta.env.VITE_AUTH
 axios.defaults.baseURL = "https://api.github.com"
-axios.defaults.headers.common["Authorization"] = "Bearer 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"
+axios.defaults.headers.common["Authorization"] = `Bearer ${key}`
+
+import.meta.env.VITE_AUTH
 
 const queryClient = new QueryClient()
 

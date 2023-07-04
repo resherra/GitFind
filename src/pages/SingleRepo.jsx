@@ -34,7 +34,7 @@ export default function SingleRepo({ setPath }) {
   return (
     <div className="min-h-screen">
       <header className="pb-20">
-        <RepoCard reponame={repo?.name} repoUrl={repo?.html_url} desc={repo?.description} isSingle={true} language={repo?.language} contributors={contributors} />
+        <RepoCard reponame={reponame} repoUrl={repo?.html_url} desc={repo?.description} isSingle={true} language={repo?.language} contributors={contributors} />
       </header>
 
       <div className="flex gap-5 pb-8">
