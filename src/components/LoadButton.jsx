@@ -5,7 +5,7 @@ export default function LoadButton({ query }) {
   const [len, setLen] = useState()
 
   useEffect(() => {
-    setLen(query.data.pages.slice(-1)[0].length)
+    setLen(query.data?.pages.slice(-1)[0].length)
   }, [query])
 
   return (

@@ -13,6 +13,8 @@ import { useEffect } from "react"
 export default function SingleRepo({ setPath }) {
   const { username, reponame } = useParams()
   const isRootPath = useMatch({ path: "/:username/:reponame", end: true })
+  const params = useParams()
+  const route = params["*"]
 
   const singleRepoQuery = useQuery(["repo", reponame], async () => {
     const res = await axios.get(`/repos/${username}/${reponame}`)
@@ -39,13 +41,13 @@ export default function SingleRepo({ setPath }) {
 
       <div className="flex gap-5 pb-8">
         <Link to="commits">
-          <div className="bg-secColor px-4 py-2 rounded-full text-sm ">Commits</div>
+          <button className={`bg-secColor px-4 py-2 rounded-full text-sm ` + `${route === "commits" || route === "" ? "border" : ""}`}>Commits</button>
         </Link>
         <Link to="PR">
-          <div className="bg-secColor px-4 py-2 rounded-full text-sm ">PR</div>
+          <button className={`bg-secColor px-4 py-2 rounded-full text-sm ` + `${route === "PR" ? "border" : ""}`}>PR</button>
         </Link>
         <Link to="issues">
-          <div className="bg-secColor px-4 py-2 rounded-full text-sm ">Issues</div>
+          <button className={`bg-secColor px-4 py-2 rounded-full text-sm ` + `${route === "issues" ? "border" : ""}`}>Issues</button>
         </Link>
       </div>
 

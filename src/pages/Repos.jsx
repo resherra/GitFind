@@ -23,6 +23,24 @@ export default function Repos({ page, setPage }) {
     keepPreviousData: true,
   })
 
+  const userQuery = useQuery(
+    ["user", username],
+    async () => {
+      const res = await axios.get(`/users/${username}`)
+
+      return res.data
+    },
+    {
+      placeholderData: {
+        avatar_url: "/placeholder.png",
+        login: "name",
+      },
+    }
+  )
+
+  // console.log(userQuery.data)
+  // console.log(reposQuery.data)
+
   useEffect(() => {
     async function prefetchNext() {
       await queryClient.prefetchQuery(["user", username, "repos", { page: page + 1 }], () => fetchRepos(username, page + 1))
@@ -41,12 +59,12 @@ export default function Repos({ page, setPage }) {
 
   return (
     <>
-      {reposQuery.fetchStatus === "idle" && reposQuery.isLoading ? null : reposQuery.isLoading ? (
-        "loading..."
-      ) : (
-        <div className="flex gap-8 justify-between">
-          <User username={reposQuery.data[1]?.owner.login} userAvatar={reposQuery.data[1]?.owner.avatar_url} />
-          <div className="w-full">
+      <div className="flex gap-8 justify-between">
+        {userQuery.isLoading ? "loading..." : <User username={userQuery.data?.login} userAvatar={userQuery.data?.avatar_url} />}
+        <div className="w-full">
+          {reposQuery.fetchStatus === "idle" && reposQuery.isLoading ? null : reposQuery.isLoading ? (
+            "loading..."
+          ) : (
             <ul>
               {
                 <li>
@@ -60,9 +78,9 @@ export default function Repos({ page, setPage }) {
                 </li>
               }
             </ul>
-          </div>
+          )}
         </div>
-      )}
+      </div>
       {reposQuery.data ? <Pagination page={page} setPage={setPage} empty={empty} setEmpty={setEmpty} /> : null}
     </>
   )

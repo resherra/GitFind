@@ -14,19 +14,21 @@ export default function Commits({ username, reponame }) {
       ) : (
         <>
           <ul className="flex flex-col gap-8 ">
-            {commitsQuery.data?.pages.map((page, index) => {
-              return (
-                <React.Fragment key={index}>
-                  {page.map((commit) => (
-                    <li key={commit.sha}>
-                      <DetailsCard author={commit.author?.login} avatar={commit.author?.avatar_url} body={commit.commit?.message} detailUrl={commit.html_url} />
-                    </li>
-                  ))}
-                </React.Fragment>
-              )
-            })}
+            {commitsQuery.status !== "error" &&
+              commitsQuery.data?.pages.map((page, index) => {
+                return (
+                  <React.Fragment key={index}>
+                    {page.map((commit) => (
+                      <li key={commit.sha}>
+                        <DetailsCard author={commit.author?.login} avatar={commit.author?.avatar_url} body={commit.commit?.message} detailUrl={commit.html_url} />
+                      </li>
+                    ))}
+                  </React.Fragment>
+                )
+              })}
           </ul>
-          {commitsQuery.data?.pages[0].length !== 0 ? (
+
+          {commitsQuery.status !== "error" && commitsQuery.data?.pages[0].length !== 0 ? (
             <div className="self-center pt-28">
               <LoadButton query={commitsQuery} />
             </div>
