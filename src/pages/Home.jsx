@@ -2,11 +2,19 @@ import { useState } from "react"
 import { Routes, Route } from "react-router-dom"
 import Repos from "./Repos"
 import { useNavigate } from "react-router-dom"
+import { useParams } from "react-router-dom"
+import { useEffect } from "react"
 
 export default function Home({ path }) {
   const navigate = useNavigate()
   const [user, setUser] = useState(path)
   const [page, setPage] = useState(1)
+  const params = useParams()
+  const username = params["*"]
+
+  useEffect(() => {
+    setUser(username)
+  }, [username])
 
   return (
     <>
