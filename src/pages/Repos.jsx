@@ -7,7 +7,7 @@ import axios from "axios"
 import RepoCard from "../components/RepoCard"
 import Pagination from "../components/Pagination"
 
-export default function Repos({ page, setPage }) {
+export default function Repos({ search, page, setPageParam }) {
   const { username } = useParams()
   const [empty, setEmpty] = useState(false)
   const queryClient = useQueryClient()
@@ -38,9 +38,6 @@ export default function Repos({ page, setPage }) {
     }
   )
 
-  // console.log(userQuery.data)
-  // console.log(reposQuery.data)
-
   useEffect(() => {
     async function prefetchNext() {
       await queryClient.prefetchQuery(["user", username, "repos", { page: page + 1 }], () => fetchRepos(username, page + 1))
@@ -70,7 +67,7 @@ export default function Repos({ page, setPage }) {
                 <li>
                   <div className="flex flex-col gap-8">
                     {reposQuery.data?.map((repo) => (
-                      <Link key={repo.node_id} to={`/${repo.owner.login}/${repo.name}`}>
+                      <Link key={repo.node_id} to={`/${repo.owner.login}/${repo.name}${search} `}>
                         <RepoCard reponame={repo.name} language={repo.language} />
                       </Link>
                     ))}{" "}
@@ -81,7 +78,7 @@ export default function Repos({ page, setPage }) {
           )}
         </div>
       </div>
-      {reposQuery.data ? <Pagination page={page} setPage={setPage} empty={empty} setEmpty={setEmpty} /> : null}
+      {reposQuery.data ? <Pagination empty={empty} setEmpty={setEmpty} page={page} setPageParam={setPageParam} /> : null}
     </>
   )
 }

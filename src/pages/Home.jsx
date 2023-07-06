@@ -3,18 +3,12 @@ import { Routes, Route } from "react-router-dom"
 import Repos from "./Repos"
 import { useNavigate } from "react-router-dom"
 import { useParams } from "react-router-dom"
-import { useEffect } from "react"
 
-export default function Home({ path }) {
+export default function Home({ path, page, setPageParam, search }) {
   const navigate = useNavigate()
   const [user, setUser] = useState(path)
-  const [page, setPage] = useState(1)
   const params = useParams()
   const username = params["*"]
-
-  useEffect(() => {
-    setUser(username)
-  }, [username])
 
   return (
     <>
@@ -28,7 +22,6 @@ export default function Home({ path }) {
             onSubmit={async (e) => {
               e.preventDefault()
               navigate(`/${user}`)
-              setPage(1)
             }}
             className="flex flex-row justify-between"
           >
@@ -40,7 +33,7 @@ export default function Home({ path }) {
         </div>
 
         <Routes>
-          <Route path="/:username" element={<Repos page={page} setPage={setPage} />} />
+          <Route path="/:username" element={<Repos search={search} page={page} setPageParam={setPageParam} />} />
         </Routes>
       </div>
     </>
