@@ -13,8 +13,7 @@ import { useEffect } from "react"
 export default function SingleRepo({ setPath }) {
   const { username, reponame } = useParams()
   const isRootPath = useMatch({ path: "/:username/:reponame", end: true })
-  const params = useParams()
-  const route = params["*"]
+  const route = useParams()["*"]
 
   const singleRepoQuery = useQuery(["repo", reponame], async () => {
     const res = await axios.get(`/repos/${username}/${reponame}`)

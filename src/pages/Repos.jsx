@@ -54,6 +54,14 @@ export default function Repos({ search, page, setPageParam }) {
     setEmpty(false)
   }, [username])
 
+  useEffect(() => {
+    if (page === 0) {
+      setPageParam({ page: 1 })
+    }
+  }, [page])
+
+  useEffect(() => {}, [])
+
   return (
     <>
       <div className="flex gap-8 justify-between">

@@ -18,8 +18,6 @@ function App() {
 
   const search = useLocation().search
 
-  console.log(page)
-
   return (
     <>
       {!isRootPath && !isReposPath ? (
