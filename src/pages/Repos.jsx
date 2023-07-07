@@ -6,6 +6,7 @@ import { useEffect } from "react"
 import axios from "axios"
 import RepoCard from "../components/RepoCard"
 import Pagination from "../components/Pagination"
+import CardSkel from "../components/CardSkel"
 
 export default function Repos({ search, page, setPageParam }) {
   const { username } = useParams()
@@ -68,7 +69,7 @@ export default function Repos({ search, page, setPageParam }) {
         {userQuery.isLoading ? "loading..." : <User username={userQuery.data?.login} userAvatar={userQuery.data?.avatar_url} />}
         <div className="w-full">
           {reposQuery.fetchStatus === "idle" && reposQuery.isLoading ? null : reposQuery.isLoading ? (
-            "loading..."
+            <CardSkel />
           ) : (
             <ul>
               {
