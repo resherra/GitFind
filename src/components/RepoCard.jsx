@@ -17,8 +17,8 @@ export default function RepoCard({ reponame, repoUrl, desc, language, isSingle =
   }, [contributors])
 
   return (
-    <div className={`border-2 border-secColor hover:bg-secColor/30 rounded-3xl p-5 ` + `${isSingle ? `bg-secColor/30` : ``}`}>
-      <div className="flex flex-col gap-12">
+    <div className={`border-2 border-secColor hover:bg-secColor/30 rounded-3xl p-5 ` + `${isSingle ? `bg-secColor/30 h-64` : `h-40`}`}>
+      <div className="flex flex-col h-full justify-between">
         <div className="flex justify-between items-center">
           <p className="text-2xl">{reponame}</p>
           {isSingle ? (

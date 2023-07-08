@@ -4,7 +4,6 @@ import Repos from "./Repos"
 import { useNavigate } from "react-router-dom"
 import { useParams } from "react-router-dom"
 import { useEffect } from "react"
-import CardSkel from "../components/CardSkel"
 
 export default function Home({ path, page, setPageParam, search }) {
   const navigate = useNavigate()
@@ -36,8 +35,6 @@ export default function Home({ path, page, setPageParam, search }) {
             </button>
           </form>
         </div>
-
-        <CardSkel />
 
         <Routes>
           <Route path="/:username" element={<Repos search={search} page={page} setPageParam={setPageParam} />} />

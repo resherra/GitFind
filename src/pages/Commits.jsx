@@ -3,6 +3,7 @@ import Container from "../components/Container"
 import useDetails from "../helpers/useDetails"
 import React from "react"
 import LoadButton from "../components/LoadButton"
+import DetailsSkel from "../components/skeleton/DetailsSkel"
 
 export default function Commits({ username, reponame }) {
   const commitsQuery = useDetails(username, reponame, "commits")
@@ -10,10 +11,10 @@ export default function Commits({ username, reponame }) {
   return (
     <Container>
       {commitsQuery.isLoading ? (
-        "loading..."
+        <DetailsSkel />
       ) : (
         <>
-          <ul className="flex flex-col gap-8 ">
+          <ul className="flex flex-col gap-8">
             {commitsQuery.status !== "error" &&
               commitsQuery.data?.pages.map((page, index) => {
                 return (

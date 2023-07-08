@@ -13,7 +13,7 @@ export default function DetailsCard({ author, avatar, body, detailUrl }) {
           <FiExternalLink />
         </a>
       </div>
-      <div className="border-2 border-secColor px-4 py-2">
+      <div className="border-2 border-secColor px-4 py-6">
         <p>{body}</p>
       </div>
     </>

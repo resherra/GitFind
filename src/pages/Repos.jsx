@@ -6,22 +6,20 @@ import { useEffect } from "react"
 import axios from "axios"
 import RepoCard from "../components/RepoCard"
 import Pagination from "../components/Pagination"
-import CardSkel from "../components/CardSkel"
+import CardSkel from "../components/skeleton/CardSkel"
 
 export default function Repos({ search, page, setPageParam }) {
   const { username } = useParams()
   const [empty, setEmpty] = useState(false)
   const queryClient = useQueryClient()
 
-  //query function
   const fetchRepos = async (user, page) => {
     const res = await axios.get(`/users/${user}/repos?per_page=6&page=${page}`)
     return res.data
   }
 
-  //query
   const reposQuery = useQuery(["user", username, "repos", { page }], () => fetchRepos(username, page), {
-    keepPreviousData: true,
+    // keepPreviousData: true,
   })
 
   const userQuery = useQuery(
@@ -73,14 +71,12 @@ export default function Repos({ search, page, setPageParam }) {
           ) : (
             <ul>
               {
-                <li>
-                  <div className="flex flex-col gap-8">
-                    {reposQuery.data?.map((repo) => (
-                      <Link key={repo.node_id} to={`/${repo.owner.login}/${repo.name}${search} `}>
-                        <RepoCard reponame={repo.name} language={repo.language} />
-                      </Link>
-                    ))}{" "}
-                  </div>
+                <li className="flex flex-col gap-8">
+                  {reposQuery.data?.map((repo) => (
+                    <Link key={repo.node_id} to={`/${repo.owner.login}/${repo.name}${search} `}>
+                      <RepoCard reponame={repo.name} language={repo.language} />
+                    </Link>
+                  ))}{" "}
                 </li>
               }
             </ul>

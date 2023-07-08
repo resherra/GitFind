@@ -3,6 +3,7 @@ import Container from "../components/Container"
 import useDetails from "../helpers/useDetails"
 import React from "react"
 import LoadButton from "../components/LoadButton"
+import DetailsSkel from "../components/skeleton/DetailsSkel"
 
 export default function PR({ username, reponame }) {
   const pullsQuery = useDetails(username, reponame, "pulls")
@@ -10,7 +11,7 @@ export default function PR({ username, reponame }) {
   return (
     <Container>
       {pullsQuery.isLoading ? (
-        "loading..."
+        <DetailsSkel />
       ) : (
         <>
           <ul className="flex flex-col gap-8">
