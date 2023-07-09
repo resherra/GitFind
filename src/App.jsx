@@ -6,7 +6,6 @@ import { Link } from "react-router-dom"
 import { useState } from "react"
 import { useSearchParams } from "react-router-dom"
 import { useLocation } from "react-router-dom"
-// import { useQueryParams, NumberParam, withDefault } from "use-query-params"
 
 function App() {
   const isRootPath = useMatch({ path: "/", end: true })
