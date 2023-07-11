@@ -33,7 +33,6 @@ export default function Repos({ search, page, setPageParam }) {
 
   const reposQuery = useQuery(["user", username, "repos", { page }], () => fetchRepos(username, page), {
     enabled: userQuery.isSuccess,
-    keepPreviousData: true,
   })
 
   useEffect(() => {
@@ -65,27 +64,29 @@ export default function Repos({ search, page, setPageParam }) {
       <div className="flex gap-8 justify-between">
         {userQuery.isLoading ? <UserSkel /> : userQuery.isSuccess ? <User username={userQuery.data?.login} userAvatar={userQuery.data?.avatar_url} /> : userQuery.isError ? <>{userQuery.error.response.status === 404 ? <div className="text-2xl font-semibold">The user you are looking for doesn't exist!</div> : <div>{userQuery.error.message}</div>}</> : null}
 
-        <div className="w-full">
-          {reposQuery.fetchStatus === "idle" && reposQuery.isLoading ? null : reposQuery.isLoading ? (
-            <CardSkel />
-          ) : reposQuery.data.length === 0 ? (
-            <div className="text-2xl font-semibold">Ooops! This page seems to be empty!</div>
-          ) : (
-            <ul>
-              {
-                <li className="flex flex-col gap-8">
-                  {reposQuery.data?.map((repo) => (
-                    <Link key={repo.node_id} to={`/${repo.owner.login}/${repo.name}${search} `}>
-                      <RepoCard reponame={repo.name} language={repo.language} />
-                    </Link>
-                  ))}
-                </li>
-              }
-            </ul>
-          )}
-        </div>
+        {!userQuery.isError && (
+          <div className="w-full">
+            {reposQuery.fetchStatus === "idle" && reposQuery.isLoading ? null : reposQuery.isLoading ? (
+              <CardSkel />
+            ) : reposQuery.data.length === 0 ? (
+              <div className="text-2xl font-semibold">Ooops! This page seems to be empty!</div>
+            ) : (
+              <ul>
+                {
+                  <li className="flex flex-col gap-8">
+                    {reposQuery.data?.map((repo) => (
+                      <Link key={repo.node_id} to={`/${repo.owner.login}/${repo.name}${search} `}>
+                        <RepoCard reponame={repo.name} language={repo.language} />
+                      </Link>
+                    ))}
+                  </li>
+                }
+              </ul>
+            )}
+          </div>
+        )}
       </div>
-      {reposQuery.data && reposQuery.data.length !== 0 ? <Pagination empty={empty} setEmpty={setEmpty} page={page} setPageParam={setPageParam} /> : null}
+      {userQuery.isSuccess && reposQuery.data && reposQuery.data.length !== 0 ? <Pagination empty={empty} setEmpty={setEmpty} page={page} setPageParam={setPageParam} /> : null}
     </>
   )
 }

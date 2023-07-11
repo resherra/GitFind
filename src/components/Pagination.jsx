@@ -1,6 +1,8 @@
 export default function Pagination({ empty, setEmpty, page, setPageParam }) {
   function handleNextButton() {
-    setPageParam({ page: page + 1 })
+    if (!empty) {
+      setPageParam({ page: page + 1 })
+    }
   }
 
   function handlePreviousButton() {
