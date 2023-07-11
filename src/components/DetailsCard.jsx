@@ -3,7 +3,7 @@ import { FiExternalLink } from "react-icons/fi"
 
 export default function DetailsCard({ author, avatar, body, detailUrl }) {
   return (
-    <>
+    <div className="">
       <div className="flex items-center justify-between bg-secColor rounded-t-2xl p-2">
         <div className="flex items-center gap-3">
           <UserAvatar userAvatar={avatar} />
@@ -13,9 +13,9 @@ export default function DetailsCard({ author, avatar, body, detailUrl }) {
           <FiExternalLink />
         </a>
       </div>
-      <div className="border-2 border-secColor px-4 py-6">
-        <p>{body}</p>
+      <div className="border-2 border-secColor px-4 py-6 ">
+        <p className="whitespace-pre-wrap max-h-96 overflow-hidden">{body}</p>
       </div>
-    </>
+    </div>
   )
 }
