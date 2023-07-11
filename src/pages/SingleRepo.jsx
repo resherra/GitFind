@@ -9,21 +9,46 @@ import axios from "axios"
 import RepoCard from "../components/RepoCard"
 import { useMatch } from "react-router-dom"
 import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import toast from "react-hot-toast"
+import SingleCardSkel from "../components/skeleton/SingleCardSkel"
 
-export default function SingleRepo({ setPath }) {
+export default function SingleRepo({ setPath, search }) {
+  const navigate = useNavigate()
   const { username, reponame } = useParams()
   const isRootPath = useMatch({ path: "/:username/:reponame", end: true })
   const route = useParams()["*"]
 
-  const singleRepoQuery = useQuery(["repo", reponame], async () => {
-    const res = await axios.get(`/repos/${username}/${reponame}`)
-    return res.data
-  })
+  const singleRepoQuery = useQuery(
+    ["repo", reponame],
+    async () => {
+      const res = await axios.get(`/repos/${username}/${reponame}`)
+      return res.data
+    },
+    {
+      retry: false,
+      onError: (err) => {
+        if (err.response.status === 404) {
+          toast.error(`The page you're looking for is not found!`, { className: "bg-secColor text-textColor rounded-2xl" })
+        } else {
+          toast.error(err.message, { className: "text-textColor rounded-2xl" })
+        }
 
-  const coQuery = useQuery(["repo", reponame, "contributors"], async () => {
-    const res = await axios.get(`/repos/${username}/${reponame}/contributors`)
-    return res.data
-  })
+        navigate("/")
+      },
+    }
+  )
+
+  const coQuery = useQuery(
+    ["repo", reponame, "contributors"],
+    async () => {
+      const res = await axios.get(`/repos/${username}/${reponame}/contributors`)
+      return res.data
+    },
+    {
+      enabled: singleRepoQuery.isSuccess,
+    }
+  )
 
   const repo = singleRepoQuery.data
   const contributors = coQuery.data
@@ -34,23 +59,21 @@ export default function SingleRepo({ setPath }) {
 
   return (
     <div className="min-h-screen">
-      <header className="pb-20">
-        <RepoCard reponame={reponame} repoUrl={repo?.html_url} desc={repo?.description} isSingle={true} language={repo?.language} contributors={contributors} />
-      </header>
+      <header className="pb-20">{singleRepoQuery.isLoading ? <SingleCardSkel /> : <RepoCard reponame={repo?.name} repoUrl={repo?.html_url} desc={repo?.description} isSingle={true} language={repo?.language} contributors={contributors} />}</header>
 
       <div className="flex gap-5 pb-8">
-        <Link to="commits">
+        <Link to={`commits${search}`}>
           <button className={`bg-secColor px-4 py-2 rounded-full text-sm ` + `${route === "commits" || route === "" ? "border" : ""}`}>Commits</button>
         </Link>
-        <Link to="PR">
+        <Link to={`PR${search}`}>
           <button className={`bg-secColor px-4 py-2 rounded-full text-sm ` + `${route === "PR" ? "border" : ""}`}>PR</button>
         </Link>
-        <Link to="issues">
+        <Link to={`issues${search}`}>
           <button className={`bg-secColor px-4 py-2 rounded-full text-sm ` + `${route === "issues" ? "border" : ""}`}>Issues</button>
         </Link>
       </div>
 
-      {isRootPath && <Commits username={username} reponame={reponame} />}
+      {isRootPath && singleRepoQuery.isSuccess ? <Commits username={username} reponame={reponame} /> : null}
 
       <Routes>
         <Route path="/commits" element={<Commits username={username} reponame={reponame} />} />

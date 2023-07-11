@@ -33,6 +33,7 @@ export default function Repos({ search, page, setPageParam }) {
 
   const reposQuery = useQuery(["user", username, "repos", { page }], () => fetchRepos(username, page), {
     enabled: userQuery.isSuccess,
+    keepPreviousData: true,
   })
 
   useEffect(() => {
@@ -84,7 +85,7 @@ export default function Repos({ search, page, setPageParam }) {
           )}
         </div>
       </div>
-      {reposQuery.data ? <Pagination empty={empty} setEmpty={setEmpty} page={page} setPageParam={setPageParam} /> : null}
+      {reposQuery.data && reposQuery.data.length !== 0 ? <Pagination empty={empty} setEmpty={setEmpty} page={page} setPageParam={setPageParam} /> : null}
     </>
   )
 }

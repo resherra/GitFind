@@ -26,7 +26,7 @@ function App() {
       ) : null}
       <Routes>
         <Route path="/*" element={<Home path={path} page={page} setPageParam={setPageParam} search={search} />} />
-        <Route path="/:username/:reponame/*" element={<SingleRepo setPath={setPath} />} />
+        <Route path="/:username/:reponame/*" element={<SingleRepo setPath={setPath} search={search} />} />
       </Routes>
       <div className="text-center pt-20 pb-4">Built with React, React Query, Tailwindcss</div>
     </>

@@ -1,6 +1,6 @@
 const items = [1, 2, 3, 4, 5, 6]
 
-export default function CardSkel() {
+export default function CardSkel({ isSingle = false }) {
   return (
     <div className="flex flex-col gap-8">
       {items.map((index) => (
