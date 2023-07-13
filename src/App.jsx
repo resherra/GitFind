@@ -6,12 +6,18 @@ import { Link } from "react-router-dom"
 import { useState } from "react"
 import { useSearchParams } from "react-router-dom"
 import { useLocation } from "react-router-dom"
+import { inject } from "@vercel/analytics"
+import { useEffect } from "react"
 
 function App() {
   const isRootPath = useMatch({ path: "/", end: true })
   const isReposPath = useMatch({ path: "/:username", end: true })
   const [path, setPath] = useState("")
   const [pageParam, setPageParam] = useSearchParams()
+
+  useEffect(() => {
+    inject()
+  }, [])
 
   const page = Number(pageParam.get("page"))
 
