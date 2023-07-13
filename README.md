@@ -6,13 +6,13 @@ GitFind is a web application that allows users to search for a GitHub user, view
 
 GitFind offers the following features:
 
-**Search**: Users can search for a GitHub user by entering their username in the search bar.
-**User Profile**: The application displays basic information about the searched user, including their avatar, bio.
-**Repositories List**: Users can browse through the repositories of the searched user, viewing details such as the repository name, language, and the number of stars and forks.
-**Repositories Pagination**: If the searched user has a large number of repositories, pagination is implemented to load repositories in smaller, manageable chunks.
-**Infinite Scroll**: The repository details supports infinite scrolling, allowing users to effortlessly load more repositories as they clicking "Load more" button.
-**Repository Details**: Clicking on a repository in the list navigates the user to a detailed view, showcasing additional information such as the commits, open issues, and pull requests for that repository.
-**Error Handling**: The application handles various error scenarios, displaying appropriate messages when API requests fail or when the searched user or repository cannot be found.
+- **Search**: Users can search for a GitHub user by entering their username in the search bar.
+- **User Profile**: The application displays basic information about the searched user, including their avatar, bio.
+- **Repositories List**: Users can browse through the repositories of the searched user, viewing details such as the repository name, language, and the number of stars and forks.
+- **Repositories Pagination**: If the searched user has a large number of repositories, pagination is implemented to load repositories in smaller, manageable chunks.
+- **Infinite Scroll**: The repository details supports infinite scrolling, allowing users to effortlessly load more repositories as they clicking "Load more" button.
+- **Repository Details**: Clicking on a repository in the list navigates the user to a detailed view, showcasing additional information such as the commits, open issues, and pull requests for that repository.
+- **Error Handling**: The application handles various error scenarios, displaying appropriate messages when API requests fail or when the searched user or repository cannot be found.
 
 ## Installation
 
