@@ -8,7 +8,6 @@ import RepoCard from "../components/RepoCard"
 import Pagination from "../components/Pagination"
 import CardSkel from "../components/skeleton/CardSkel"
 import UserSkel from "../components/skeleton/UserSkel"
-import SingleCardSkel from "../components/skeleton/SingleCardSkel"
 
 export default function Repos({ search, page, setPageParam }) {
   const { username } = useParams()
@@ -48,7 +47,7 @@ export default function Repos({ search, page, setPageParam }) {
     if (page > 0) {
       prefetchNext()
     }
-  }, [page, reposQuery])
+  }, [page])
 
   useEffect(() => {
     setEmpty(false)
