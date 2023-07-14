@@ -2,8 +2,10 @@ import { FiExternalLink, FiMoreHorizontal } from "react-icons/fi"
 import UserAvatar from "./UserAvatar"
 import { useEffect } from "react"
 import { useState } from "react"
+import { RiStarSLine } from "react-icons/ri"
+import { VscRepoForked } from "react-icons/vsc"
 
-export default function RepoCard({ reponame, repoUrl, desc, language, isSingle = false, contributors }) {
+export default function RepoCard({ reponame, repoUrl, desc, language, isSingle = false, contributors, forksCount, starsCount }) {
   const [cont, setCont] = useState([])
   const [isLonger, setIsLonger] = useState(false)
 
@@ -32,6 +34,22 @@ export default function RepoCard({ reponame, repoUrl, desc, language, isSingle =
         {isSingle ? <div>{desc}</div> : null}
         <div className="flex justify-between items-center">
           <p className="text-xs text-brandBlue">{language}</p>
+          {!isSingle && (
+            <div className="flex gap-6">
+              {starsCount > 0 && (
+                <div className="flex items-center gap-2">
+                  <RiStarSLine />
+                  <div>{starsCount}</div>
+                </div>
+              )}
+              {forksCount > 0 && (
+                <div className="flex items-center gap-2">
+                  <VscRepoForked />
+                  <div>{forksCount}</div>
+                </div>
+              )}
+            </div>
+          )}
           {isSingle ? (
             <div className="flex gap-2 items-center">
               <div className="flex gap-2">{cont !== "" && cont?.map((acc) => <UserAvatar key={acc.id} userAvatar={acc.avatar_url} username={acc.login} />)}</div>

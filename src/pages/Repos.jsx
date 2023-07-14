@@ -35,6 +35,8 @@ export default function Repos({ search, page, setPageParam }) {
     enabled: userQuery.isSuccess,
   })
 
+  reposQuery.isSuccess && console.log(reposQuery.data[1])
+
   useEffect(() => {
     async function prefetchNext() {
       await queryClient.prefetchQuery(["user", username, "repos", { page: page + 1 }], () => fetchRepos(username, page + 1))
@@ -62,7 +64,7 @@ export default function Repos({ search, page, setPageParam }) {
   return (
     <>
       <div className="flex gap-8 justify-between">
-        {userQuery.isLoading ? <UserSkel /> : userQuery.isSuccess ? <User username={userQuery.data?.login} userAvatar={userQuery.data?.avatar_url} /> : userQuery.isError ? <>{userQuery.error.response.status === 404 ? <div className="text-2xl font-semibold">The user you are looking for doesn't exist!</div> : <div>{userQuery.error.message}</div>}</> : null}
+        {userQuery.isLoading ? <UserSkel /> : userQuery.isSuccess ? <User username={userQuery.data?.login} userAvatar={userQuery.data?.avatar_url} company={userQuery.data?.company} location={userQuery.data?.location} /> : userQuery.isError ? <>{userQuery.error.response.status === 404 ? <div className="text-2xl font-semibold">The user you are looking for doesn't exist!</div> : <div>{userQuery.error.message}</div>}</> : null}
 
         {!userQuery.isError && (
           <div className="w-full">
@@ -76,7 +78,7 @@ export default function Repos({ search, page, setPageParam }) {
                   <li className="flex flex-col gap-8">
                     {reposQuery.data?.map((repo) => (
                       <Link key={repo.node_id} to={`/${repo.owner.login}/${repo.name}${search} `}>
-                        <RepoCard reponame={repo.name} language={repo.language} />
+                        <RepoCard reponame={repo.name} language={repo.language} forksCount={repo.forks_count} starsCount={repo.stargazers_count} />
                       </Link>
                     ))}
                   </li>
