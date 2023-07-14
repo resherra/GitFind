@@ -4,19 +4,24 @@ import { MdLocationCity } from "react-icons/md"
 
 export default function User({ username, userAvatar, company, location }) {
   return (
-    <div className="bg-secColor/30 h-fit w-6/12 p-10 rounded-3xl">
-      <div className="flex flex-col gap-8 items-center">
-        <UserAvatar userAvatar={userAvatar} username={username} isPrinc={true} />
-        <div className="flex w-full justify-between items-center">
-          <div>@{username}</div>
-          <a href={`https://github.com/${username}`} target="_blank">
-            <FiExternalLink />
-          </a>
+    <div className="bg-secColor/30 border border-secColor h-72 px-10 rounded-3xl flex items-center">
+      <div className="flex items-start justify-between w-full">
+        <div className="flex items-start gap-14">
+          <UserAvatar userAvatar={userAvatar} username={username} isPrinc={true} />
+          <div>
+            <div className="text-2xl font-semibold pb-5">@{username}</div>
+            {company && (
+              <div className="flex flex-row items-center justify-baseline gap-4 pb-12">
+                <MdLocationCity />
+                <div>{company}</div>
+              </div>
+            )}
+            {location && <div className="text-brandBlue">{location}</div>}
+          </div>
         </div>
-        <div className="flex flex-row items-center justify-baseline gap-8">
-          <MdLocationCity />
-          <div>{location}</div>
-        </div>
+        <a href={`https://github.com/${username}`} target="_blank">
+          <FiExternalLink />
+        </a>
       </div>
     </div>
   )

@@ -8,6 +8,7 @@ import RepoCard from "../components/RepoCard"
 import Pagination from "../components/Pagination"
 import CardSkel from "../components/skeleton/CardSkel"
 import UserSkel from "../components/skeleton/UserSkel"
+import SingleCardSkel from "../components/skeleton/SingleCardSkel"
 
 export default function Repos({ search, page, setPageParam }) {
   const { username } = useParams()
@@ -35,8 +36,6 @@ export default function Repos({ search, page, setPageParam }) {
     enabled: userQuery.isSuccess,
   })
 
-  reposQuery.isSuccess && console.log(reposQuery.data[1])
-
   useEffect(() => {
     async function prefetchNext() {
       await queryClient.prefetchQuery(["user", username, "repos", { page: page + 1 }], () => fetchRepos(username, page + 1))
@@ -63,15 +62,14 @@ export default function Repos({ search, page, setPageParam }) {
 
   return (
     <>
-      <div className="flex gap-8 justify-between">
+      <div className="flex flex-col gap-8 justify-between">
         {userQuery.isLoading ? <UserSkel /> : userQuery.isSuccess ? <User username={userQuery.data?.login} userAvatar={userQuery.data?.avatar_url} company={userQuery.data?.company} location={userQuery.data?.location} /> : userQuery.isError ? <>{userQuery.error.response.status === 404 ? <div className="text-2xl font-semibold">The user you are looking for doesn't exist!</div> : <div>{userQuery.error.message}</div>}</> : null}
-
         {!userQuery.isError && (
-          <div className="w-full">
+          <>
             {reposQuery.fetchStatus === "idle" && reposQuery.isLoading ? null : reposQuery.isLoading ? (
               <CardSkel />
             ) : reposQuery.data.length === 0 ? (
-              <div className="text-2xl font-semibold">Ooops! This page seems to be empty!</div>
+              <div className="text-2xl font-semibold">Ooops! Seems this page is empty!</div>
             ) : (
               <ul>
                 {
@@ -85,7 +83,7 @@ export default function Repos({ search, page, setPageParam }) {
                 }
               </ul>
             )}
-          </div>
+          </>
         )}
       </div>
       {userQuery.isSuccess && reposQuery.data && reposQuery.data.length !== 0 ? <Pagination empty={empty} setEmpty={setEmpty} page={page} setPageParam={setPageParam} /> : null}
