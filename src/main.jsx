@@ -14,7 +14,13 @@ axios.defaults.headers.common["Authorization"] = `Bearer ${key}`
 
 import.meta.env.VITE_AUTH
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000 * 5,
+    },
+  },
+})
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
