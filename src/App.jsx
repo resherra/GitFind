@@ -8,7 +8,9 @@ import { useSearchParams } from "react-router-dom"
 import { useLocation } from "react-router-dom"
 import { inject } from "@vercel/analytics"
 import { useEffect } from "react"
-import { FiExternalLink } from "react-icons/fi"
+import stateContext from "./context/stateContext"
+import dispatchContext from "./context/dispatchContext"
+import { useImmerReducer } from "use-immer"
 
 function App() {
   const isRootPath = useMatch({ path: "/", end: true })
@@ -24,6 +26,12 @@ function App() {
 
   const search = useLocation().search
 
+  const initialState = {}
+
+  function ourReducer(draft, action) {}
+
+  const [state, dispatch] = useImmerReducer(ourReducer, initialState)
+
   return (
     <>
       {!isRootPath && !isReposPath ? (
@@ -31,10 +39,14 @@ function App() {
           <div className="pb-8 underline">Back</div>
         </Link>
       ) : null}
-      <Routes>
-        <Route path="/*" element={<Home path={path} page={page} setPageParam={setPageParam} search={search} />} />
-        <Route path="/:username/:reponame/*" element={<SingleRepo setPath={setPath} search={search} />} />
-      </Routes>
+      <stateContext.Provider value={state}>
+        <dispatchContext.Provider value={dispatch}>
+          <Routes>
+            <Route path="/*" element={<Home path={path} page={page} setPageParam={setPageParam} search={search} />} />
+            <Route path="/:username/:reponame/*" element={<SingleRepo setPath={setPath} search={search} />} />
+          </Routes>
+        </dispatchContext.Provider>
+      </stateContext.Provider>
       <div className="text-center pt-24 pb-4">
         Built by{" "}
         <a href="https://chred.me" target="_blank" className="font-semibold text-red-400">
