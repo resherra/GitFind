@@ -8,6 +8,7 @@ import { useSearchParams } from "react-router-dom"
 import { useLocation } from "react-router-dom"
 import { inject } from "@vercel/analytics"
 import { useEffect } from "react"
+import { FiExternalLink } from "react-icons/fi"
 
 function App() {
   const isRootPath = useMatch({ path: "/", end: true })
@@ -34,7 +35,13 @@ function App() {
         <Route path="/*" element={<Home path={path} page={page} setPageParam={setPageParam} search={search} />} />
         <Route path="/:username/:reponame/*" element={<SingleRepo setPath={setPath} search={search} />} />
       </Routes>
-      <div className="text-center pt-24 pb-4">Built with React, React Query, Tailwindcss</div>
+      <div className="text-center pt-24 pb-4">
+        Built by{" "}
+        <a href="https://chred.me" target="_blank" className="font-semibold text-red-400">
+          Chred
+        </a>{" "}
+        using React, React Query, Tailwindcss.
+      </div>
     </>
   )
 }
