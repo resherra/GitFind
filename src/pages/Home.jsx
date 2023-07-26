@@ -18,7 +18,7 @@ export default function Home({ path, page, setPageParam, search }) {
     <>
       <div className="flex flex-col min-h-screen">
         <div className="text-center pb-10 lg:pb-20">
-          <header className="pb-20">
+          <header className="pb-14 lg:pb-20">
             <h1 className="text-xl lg:text-3xl font-semibold pb-5">Git Find</h1>
             <h3 className="lg:text-xl font-semibold">Look up a GitHub user and dive into their repos...</h3>
           </header>
