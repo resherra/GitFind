@@ -19,10 +19,10 @@ export default function RepoCard({ reponame, repoUrl, desc, language, isSingle =
   }, [contributors])
 
   return (
-    <div className={`border-2 border-secColor hover:bg-secColor/30 rounded-3xl p-5 ` + `${isSingle ? `bg-secColor/30 h-64` : `h-40`}`}>
+    <div className={`border lg:border-2 border-secColor hover:bg-secColor/30 rounded-2xl lg:rounded-3xl  p-3 lg:p-5 ` + `${isSingle ? `bg-secColor/30 h-44 lg:h-64` : `h-32 lg:h-40`}`}>
       <div className="flex flex-col h-full justify-between">
         <div className="flex justify-between items-center">
-          <p className="text-2xl">{reponame}</p>
+          <p className="text-base lg:text-2xl">{reponame}</p>
           {isSingle ? (
             <a href={repoUrl} target="_blank">
               <FiExternalLink />
@@ -35,7 +35,7 @@ export default function RepoCard({ reponame, repoUrl, desc, language, isSingle =
         <div className="flex justify-between items-center">
           <p className="text-xs text-brandBlue">{language}</p>
           {!isSingle && (
-            <div className="flex gap-6">
+            <div className="flex gap-4 lg:gap-6 text-xs">
               {starsCount > 0 && (
                 <div className="flex items-center gap-2">
                   <RiStarSLine />
@@ -51,11 +51,11 @@ export default function RepoCard({ reponame, repoUrl, desc, language, isSingle =
             </div>
           )}
           {isSingle ? (
-            <div className="flex gap-2 items-center">
-              <div className="flex gap-2">{cont !== "" && cont?.map((acc) => <UserAvatar key={acc.id} userAvatar={acc.avatar_url} username={acc.login} />)}</div>
+            <div className="flex gap-1 lg:gap-2 items-center">
+              <div className="flex gap-1 lg:gap-2">{cont !== "" && cont?.map((acc) => <UserAvatar key={acc.id} userAvatar={acc.avatar_url} username={acc.login} />)}</div>
               {isLonger ? (
-                <div className="bg-white/10 w-7 h-7 rounded-full flex justify-center items-center">
-                  <FiMoreHorizontal />
+                <div className="bg-white/10 w-4 h-4 lg:w-7 lg:h-7 rounded-full flex justify-center items-center">
+                  <FiMoreHorizontal className="w-2" />
                 </div>
               ) : null}
             </div>

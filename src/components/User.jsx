@@ -4,9 +4,9 @@ import { MdLocationCity } from "react-icons/md"
 
 export default function User({ username, userAvatar, company, location }) {
   return (
-    <div className="bg-secColor/30 border border-secColor h-72 px-10 rounded-3xl flex items-center">
+    <div className="bg-secColor/30 border border-secColor h-36 lg:h-72 px-5 lg:px-10 rounded-3xl flex items-center">
       <div className="flex items-start justify-between w-full">
-        <div className="flex items-start gap-14">
+        <div className="flex items-start gap-7 lg:gap-14">
           <UserAvatar userAvatar={userAvatar} username={username} isPrinc={true} />
           <div>
             <div className="text-2xl font-semibold pb-5">@{username}</div>
