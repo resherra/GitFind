@@ -9,6 +9,9 @@ export default {
         brandBlue: "#9db2bf",
         textColor: "#eeeeee",
       },
+      fontFamily: {
+        display: ["cascadia code"],
+      },
     },
   },
   plugins: [],

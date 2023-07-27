@@ -59,17 +59,16 @@ export default function SingleRepo({ setPath, search }) {
 
   return (
     <div className="min-h-screen">
-      <header className="pb-20">{singleRepoQuery.isLoading ? <SingleCardSkel /> : <RepoCard reponame={repo?.name} repoUrl={repo?.html_url} desc={repo?.description} isSingle={true} language={repo?.language} contributors={contributors} />}</header>
-
-      <div className="flex gap-5 pb-8">
+      <header className="pb-14 md:pb-20">{singleRepoQuery.isLoading ? <SingleCardSkel /> : <RepoCard reponame={repo?.name} repoUrl={repo?.html_url} desc={repo?.description} isSingle={true} language={repo?.language} contributors={contributors} />}</header>
+      <div className="flex gap-3 md:gap-5 pb-8">
         <Link to={`commits${search}`} oncli>
-          <button className={`bg-secColor px-3 py-[6px] lg:px-4 lg:py-2 rounded-full text-xs lg:text-sm ` + `${route === "commits" || route === "" ? "border" : ""}`}>Commits</button>
+          <button className={`bg-secColor px-3 py-[6px] md:px-4 md:py-2 rounded-full text-xs md:text-sm ` + `${route === "commits" || route === "" ? "border" : ""}`}>Commits</button>
         </Link>
         <Link to={`PR${search}`}>
-          <button className={`bg-secColor px-3 py-[6px] lg:px-4 lg:py-2 rounded-full text-xs lg:text-sm ` + `${route === "PR" ? "border" : ""}`}>PR</button>
+          <button className={`bg-secColor px-3 py-[6px] md:px-4 md:py-2 rounded-full text-xs md:text-sm ` + `${route === "PR" ? "border" : ""}`}>PR</button>
         </Link>
         <Link to={`issues${search}`}>
-          <button className={`bg-secColor px-3 py-[6px] lg:px-4 lg:py-2 rounded-full text-xs lg:text-sm ` + `${route === "issues" ? "border" : ""}`}>Issues</button>
+          <button className={`bg-secColor px-3 py-[6px] md:px-4 md:py-2 rounded-full text-xs md:text-sm ` + `${route === "issues" ? "border" : ""}`}>Issues</button>
         </Link>
       </div>
 

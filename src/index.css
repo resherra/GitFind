@@ -3,10 +3,5 @@
 @tailwind utilities;
 
 :root {
-  font-family: cascadia code, inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color: #eeeeee;
-  background-color: #303841;
+  @apply bg-primColor text-textColor font-display selection:bg-textColor selection:text-secColor;
 }

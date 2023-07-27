@@ -62,13 +62,13 @@ export default function Repos({ search, page, setPageParam }) {
   return (
     <>
       <div className="flex flex-col gap-8 justify-between">
-        {userQuery.isLoading ? <UserSkel /> : userQuery.isSuccess ? <User username={userQuery.data?.login} userAvatar={userQuery.data?.avatar_url} company={userQuery.data?.company} location={userQuery.data?.location} /> : userQuery.isError ? <>{userQuery.error.response.status === 404 ? <div className="text-2xl font-semibold">The user you are looking for doesn't exist!</div> : <div>{userQuery.error.message}</div>}</> : null}
+        {userQuery.isLoading ? <UserSkel /> : userQuery.isSuccess ? <User username={userQuery.data?.login} userAvatar={userQuery.data?.avatar_url} company={userQuery.data?.company} location={userQuery.data?.location} /> : userQuery.isError ? <>{userQuery.error.response.status === 404 ? <div className="text-md md:text-2xl font-semibold">The user you are looking for doesn't exist!</div> : <div>{userQuery.error.message}</div>}</> : null}
         {!userQuery.isError && (
           <>
             {reposQuery.fetchStatus === "idle" && reposQuery.isLoading ? null : reposQuery.isLoading ? (
               <CardSkel />
             ) : reposQuery.data.length === 0 ? (
-              <div className="text-2xl font-semibold">Ooops! Seems this page is empty!</div>
+              <div className="text-md md:text-2xl font-semibold w-[80%] ">Ooops! This user have no repos /or private maybe...</div>
             ) : (
               <ul>
                 {

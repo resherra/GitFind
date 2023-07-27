@@ -14,7 +14,7 @@ export default function LoadButton({ query }) {
         query.fetchNextPage()
       }}
       disabled={len < 6 || (!query.isFetchingNextPage && !query.hasNextPage)}
-      className="bg-secColor disabled:text-white/50 disabled:bg-textColor/5  w-fit lg:w-28 px-3 py-[6px] rounded-lg lg:rounded-xl"
+      className="bg-secColor disabled:text-white/50 disabled:bg-textColor/5 w-fit md:w-28 px-3 py-[6px] rounded-md md:rounded-xl"
     >
       {query.isFetchingNextPage ? "Loading..." : "Load more"}
     </button>

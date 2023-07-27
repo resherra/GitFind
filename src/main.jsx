@@ -26,7 +26,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <div className="max-w-screen-sm m-auto p-4 text-xs lg:text-sm lg:p-0  mt-8 lg:mt-20">
+        <div className="max-w-screen-sm m-auto p-4 text-xs md:text-sm md:p-0  mt-8 md:mt-20">
           <App />
           <Toaster />
         </div>

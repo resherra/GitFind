@@ -47,7 +47,7 @@ function App() {
           </Routes>
         </dispatchContext.Provider>
       </stateContext.Provider>
-      <div className="text-center pt-20 lg:pt-24 pb-2 lg:pb-4">
+      <div className="text-center pt-20 md:pt-24 md:pb-4">
         Built by{" "}
         <a href="https://chred.me" target="_blank" className="font-semibold text-red-400">
           Chred

@@ -30,7 +30,7 @@ export default function Commits({ username, reponame }) {
           </ul>
 
           {commitsQuery.status !== "error" && commitsQuery.data?.pages[0].length !== 0 ? (
-            <div className="self-center pt-28">
+            <div className="self-center pt-20 md:pt-28">
               <LoadButton query={commitsQuery} />
             </div>
           ) : (
