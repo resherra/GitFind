@@ -68,7 +68,7 @@ export default function Repos({ search, page, setPageParam }) {
             {reposQuery.fetchStatus === "idle" && reposQuery.isLoading ? null : reposQuery.isLoading ? (
               <CardSkel />
             ) : reposQuery.data.length === 0 ? (
-              <div className="text-md md:text-2xl font-semibold w-[80%] ">Ooops! This user have no repos /or private maybe...</div>
+              <div className="text-md md:text-2xl font-semibold w-[80%] ">Ooops! This page is empty!...</div>
             ) : (
               <ul>
                 {
