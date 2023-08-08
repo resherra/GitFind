@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { useParams } from "react-router-dom"
 import { useEffect } from "react"
 
-export default function Home({ path, page, setPageParam, search }) {
+export default function Home({ path }) {
   const navigate = useNavigate()
   const [user, setUser] = useState(path)
   const route = useParams()["*"]
@@ -37,7 +37,7 @@ export default function Home({ path, page, setPageParam, search }) {
         </div>
 
         <Routes>
-          <Route path="/:username" element={<Repos search={search} page={page} setPageParam={setPageParam} />} />
+          <Route path="/:username" element={<Repos />} />
         </Routes>
       </div>
     </>

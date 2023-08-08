@@ -8,8 +8,12 @@ import RepoCard from "../components/RepoCard"
 import Pagination from "../components/Pagination"
 import CardSkel from "../components/skeleton/CardSkel"
 import UserSkel from "../components/skeleton/UserSkel"
+import { useContext } from "react"
+import stateContext from "../context/stateContext"
 
-export default function Repos({ search, page, setPageParam }) {
+export default function Repos() {
+  const appState = useContext(stateContext)
+  const page = appState.page
   const { username } = useParams()
   const [empty, setEmpty] = useState(false)
   const queryClient = useQueryClient()
@@ -55,7 +59,7 @@ export default function Repos({ search, page, setPageParam }) {
 
   useEffect(() => {
     if (page === 0 && userQuery.isSuccess) {
-      setPageParam({ page: 1 })
+      appState.setPageParam({ page: 1 })
     }
   }, [page, userQuery])
 
@@ -74,7 +78,7 @@ export default function Repos({ search, page, setPageParam }) {
                 {
                   <li className="flex flex-col gap-8">
                     {reposQuery.data?.map((repo) => (
-                      <Link key={repo.node_id} to={`/${repo.owner.login}/${repo.name}${search} `}>
+                      <Link key={repo.node_id} to={`/${repo.owner.login}/${repo.name}${appState.search}`}>
                         <RepoCard reponame={repo.name} language={repo.language} forksCount={repo.forks_count} starsCount={repo.stargazers_count} />
                       </Link>
                     ))}
@@ -85,7 +89,7 @@ export default function Repos({ search, page, setPageParam }) {
           </>
         )}
       </div>
-      {userQuery.isSuccess && reposQuery.data && reposQuery.data.length !== 0 ? <Pagination empty={empty} setEmpty={setEmpty} page={page} setPageParam={setPageParam} /> : null}
+      {userQuery.isSuccess && reposQuery.data && reposQuery.data.length !== 0 ? <Pagination empty={empty} setEmpty={setEmpty} /> : null}
     </>
   )
 }

@@ -12,8 +12,11 @@ import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import toast from "react-hot-toast"
 import SingleCardSkel from "../components/skeleton/SingleCardSkel"
+import { useContext } from "react"
+import stateContext from "../context/stateContext"
 
-export default function SingleRepo({ setPath, search }) {
+export default function SingleRepo({ setPath }) {
+  const appState = useContext(stateContext)
   const navigate = useNavigate()
   const { username, reponame } = useParams()
   const isRootPath = useMatch({ path: "/:username/:reponame", end: true })
@@ -61,13 +64,13 @@ export default function SingleRepo({ setPath, search }) {
     <div className="min-h-screen">
       <header className="pb-14 md:pb-20">{singleRepoQuery.isLoading ? <SingleCardSkel /> : <RepoCard reponame={repo?.name} repoUrl={repo?.html_url} desc={repo?.description} isSingle={true} language={repo?.language} contributors={contributors} />}</header>
       <div className="flex gap-3 md:gap-5 pb-8">
-        <Link to={`commits${search}`} oncli>
+        <Link to={`commits${appState.search}`} oncli>
           <button className={`bg-secColor px-3 py-[6px] md:px-4 md:py-2 rounded-full text-xs md:text-sm ` + `${route === "commits" || route === "" ? "border" : ""}`}>Commits</button>
         </Link>
-        <Link to={`PR${search}`}>
+        <Link to={`PR${appState.search}`}>
           <button className={`bg-secColor px-3 py-[6px] md:px-4 md:py-2 rounded-full text-xs md:text-sm ` + `${route === "PR" ? "border" : ""}`}>PR</button>
         </Link>
-        <Link to={`issues${search}`}>
+        <Link to={`issues${appState.search}`}>
           <button className={`bg-secColor px-3 py-[6px] md:px-4 md:py-2 rounded-full text-xs md:text-sm ` + `${route === "issues" ? "border" : ""}`}>Issues</button>
         </Link>
       </div>

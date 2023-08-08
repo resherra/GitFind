@@ -1,10 +1,15 @@
-export default function Pagination({ empty, setEmpty, page, setPageParam }) {
+import { useContext } from "react"
+import stateContext from "../context/stateContext"
+
+export default function Pagination({ empty, setEmpty }) {
+  const appState = useContext(stateContext)
+  const page = appState.page
   function handleNextButton() {
-    setPageParam({ page: page + 1 })
+    appState.setPageParam({ page: page + 1 })
   }
 
   function handlePreviousButton() {
-    setPageParam({ page: page - 1 })
+    appState.setPageParam({ page: page - 1 })
     setEmpty(false)
   }
 
