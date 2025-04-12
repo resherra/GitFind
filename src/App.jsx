@@ -42,8 +42,8 @@ function App() {
       </stateContext.Provider>
       <div className="text-center pt-20 md:pt-24 md:pb-4">
         Built by{" "}
-        <a href="https://chred.me" target="_blank" className="font-semibold text-red-400">
-          Chred
+        <a href="https://github.com/resherra/" target="_blank" className="font-semibold text-red-400">
+          resherra
         </a>{" "}
         using React, React Query, Tailwindcss.
       </div>

@@ -20,7 +20,7 @@ export default function Home({ path }) {
         <div className="text-center pb-10 md:pb-20">
           <header className="pb-14 md:pb-20">
             <h1 className="text-xl md:text-3xl font-semibold pb-5">Git Find</h1>
-            <h3 className="md:text-xl font-semibold">Look up a GitHub user and dive into their repos...</h3>
+            <h3 className="md:text-xl font-semibold">Look up a GitHub user and explore what they’ve been working on...</h3>
           </header>
           <form
             onSubmit={async (e) => {
